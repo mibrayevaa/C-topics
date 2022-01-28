@@ -1,0 +1,262 @@
+//1
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main (){
+
+    int v,sum = 0;
+
+    bool x = false;
+
+    double avg;
+
+    cin >> v;
+
+    int *a = new int[v];
+
+    for (int i = 0; i < v; i++){
+
+        cin >> a[i];
+
+        sum += a[i];
+
+    }
+    
+    sort(a,a+v);
+
+    if (a[1] != a[v-2]){
+        x = true;
+
+        sum -= a[1];
+
+    }
+    sum -= a[v-2];
+
+    if (x == true)
+
+        avg = (sum+0.0)/(v-2+0.0);
+
+    else 
+        avg = (sum+0.0)/(v-1+0.0);
+
+    cout << sum << ' ' << avg;
+
+    
+    
+
+}
+
+//2
+#include <string>
+#include <iostream>
+using namespace std;
+class Shape {
+    double width;
+    double height;
+public:
+    Shape() {
+        width = 1;
+        height = 1;
+    }
+    Shape(double width, double height) {
+        this->height = height;
+        this->width = width;
+    }
+    double getHeight() {
+        return height;
+    }
+    double getWidth() {
+        return width;
+    }
+    virtual double getArea() = 0;
+};
+class Rectangle :public Shape {
+    double width = 1.0; 
+    double height = 1.0;
+public:
+    Rectangle() {}
+    Rectangle(double width, double height):Shape(width, height) {
+        this->width = width;
+        this->height = height;
+    }
+    double getArea() override {
+        double area = width * height;
+        return area;
+    }
+};
+class Triangle : public Shape {
+private:
+    double width = 1.0;
+    double height = 1.0;
+public:
+    Triangle() {}
+    Triangle(double width, double height):Shape(width, height) {
+      this->width = width;
+      this->height = height;
+    }
+    double getArea() override {
+        double area = (height*width) / 2;
+        return area;
+    }
+};
+int main() {
+  Triangle q(2.3, 8.3);
+  Rectangle m(6.1, 2.7);
+    
+    cout << "Rectangle's area = " << q.getArea() << " and Triangle's area = " << m.getArea() << endl;
+    return 0;
+}
+
+//3,4
+#include <iostream>
+#include <string>
+using namespace std;
+class Customer {
+ int ID;
+ string name;
+ char gender;
+ 
+public:
+ Customer() {}
+ Customer (int ID, string name,char gender) {
+ this->ID = ID;
+ this->name = name;
+ this->gender = gender;
+ }
+ int getID() {
+ return ID;
+ }
+ string getName() {
+ return name;
+ }
+ char getGender() {
+ return gender;
+ }
+ string Tostring() {
+ cout << name<< "(" << ID << ")" << endl;
+ }
+};
+class Account {
+private:
+ int id;
+ Customer* customer;
+ double balance = 0.0;
+public:
+ Account(int id, Customer* customer, double balance) {
+ this->id = id;
+ this->customer = customer;
+ this->balance = balance;
+ }
+ Account(int id, Customer* customer) {
+ this->id = id;
+ this->customer = customer;
+ }
+ int getID() {
+ return id;
+ }
+ Customer* getCustomer() {
+ return customer;
+ }
+ double getBalance() {
+ return balance;
+ }
+ void setBalance(double balance) {
+ balance = balance;
+ }
+ string toString() {
+ cout << "name" << "(" << id << ")" << "$" << balance << endl;
+ }
+ string getCustomerName() {
+ }
+ ~Account() {
+ delete[] customer;
+ }
+ Account deposit(double amount) {
+ balance = amount + balance;
+ }
+ Account withdraw(double amount) {
+ if (balance >= amount)
+ balance = balance - amount;
+ else
+ cout << "amount withdrawn exceeds the current balance!" << endl;
+ }
+};
+int main() {
+ Customer customer[2];
+ customer[0] = Customer(2345676, "Madina", 'F');
+ customer[1] = Customer(234567654, "Helen", 'F');
+ Account ac(345678, customer, 2345678.5);
+ ac.toString();
+ return 0;
+}
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Account {
+	int id;
+	string name;
+	int balance = 0;
+public:
+	Account(int id, string name) {
+		this -> id = id;
+		this -> name = name;
+	}
+
+	Account(int id, string name, int balance) {
+		this -> id = id;
+		this -> name = name;
+		this -> balance = balance;
+	}
+	int getid() {
+		return id;
+	}
+	string getname() {
+		return name;
+	}
+	int getBalance() {
+		return balance;
+	}
+	int credit(int amount) {
+		balance += amount;
+		return balance;
+	}
+	int debit(int amount) {
+		if  (amount > balance) {
+      cout << "amount exceeded";
+      return 0;
+		}
+		else
+			balance -= amount;
+		return balance;
+	}
+	int transferTo(Account another, int amount) {
+		if (amount <= balance) {
+			balance -= amount;
+      another.debit(amount);
+		}
+		else  
+		  cout << "Amount exceeded"<<endl;
+		return balance;
+	}
+	
+};
+int main() {
+	Account account(234567, "Madina", 123456);
+	cout << account.getid() << endl;
+	cout << account.getname() << endl;
+	cout << account.getBalance() << endl;
+	cout << account.credit(23456) << endl;
+	cout << account.debit(1234567) << endl;
+	Account another(2345678, "QQQQ", 234560);
+	cout << account.transferTo(another, 23456y7) << endl;
+  return 0;
+}
+
+
+
+
+
+

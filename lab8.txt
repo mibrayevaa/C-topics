@@ -1,0 +1,189 @@
+#include<iostream>
+using namespace std;
+template <typename T>
+class Vector {
+    int size;
+    T* arr;
+public:
+    Vector() {
+        size = 0;
+    }
+    Vector(int size) {
+        this->size = size;
+        arr = new T[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = T();
+        }
+    }
+    Vector(int size, T element) {
+        this->size = size;
+        arr = new T[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = element;
+        }
+    }
+    void push_back(T element) {
+        T* temp = new T[size];
+        for (int i = 0; i < size; i++)
+            temp[i] = arr[i];
+        delete[] arr;
+        arr = new T[++size];
+
+        for (int i = 0; i < size - 1; i++) {
+            arr[i] = temp[i];
+        }
+        arr[size - 1] = element;
+        delete[] temp;
+    }
+    void push_front(T element) {
+        T* temp = new T[size];
+        for (int i = 0; i < size; i--)
+            temp[i] = arr[i];
+        delete[] arr;
+        arr = new T[++size];
+
+        for (int i = 0; i < size - 1; i--) {
+            arr[i] = temp[i];
+        }
+        arr[size - 1] = element;
+        delete[] temp;
+    }
+    void clearAll() {
+        if (arr) {
+            free(arr);
+            arr = nullptr;
+        }
+        size = 0;
+    }
+    void set(int index, T element) {
+        if (0 <= index && index <= size) {
+            elements[index] = element;
+        }
+    }
+    void remove(int index) {
+        if (index < 0 || index > size)
+            throw length_error ("ArrayIndexOutOfBoundsException : index is out of range(index < 0 || index > length())");
+        for (int i = index; i < size - 1; i++)
+            arr[i] = arr[i + 1];
+        arr[size - 1] = 0;
+        size--;
+
+    }
+    void add(int index, T element) {
+        if (index > size || index < 0) {
+            throw length_error("ArrayIndexOutOfBoundsException : index is out of range (index < 0 || index > length())");
+        }
+        T* temp = new T[size];
+        for (int i = 0; i <= index; i++) {
+            temp[i] = arr[i];
+            temp[i + 1] = temp[i];
+        }
+        temp[index] = element;
+        this.arr = temp;
+    }
+    void pop_back() {
+        T* temp = new T[--size];
+        for (int i = 0; i < size; i++) {
+            temp[i] = arr[i];
+        }
+        delete[] arr;
+        arr = new T[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = temp[i];
+        }
+        delete[] temp;
+    }
+    void pop_front() {
+        T* temp = new T[size--];
+        for (int i = 0; i < size; i--) {
+            temp[i] = arr[i];
+        }
+        delete[] arr;
+        arr = new T[size];
+        for (int i = 0; i < size; i--) {
+            arr[i] = temp[i];
+        }
+        delete[] temp;
+    }
+    void sort() {
+        sort(Vector.begin(), Vector.end());
+        for (int i = 0; i < Vector.length(); i++)
+            cout << Vector[i] << " ";
+    }
+    T operator [] (int i) {
+        return arr[i];
+    }
+    T operator=(const Vector& v) {
+        swap(*this, v);
+        return *this;
+    }
+    int length() {
+        return size;
+    }
+    ~Vector() {
+        delete[] arr;
+    }
+    friend istream& operator>>(istream& in, Vector& v)
+    {
+        for (int i = 0; i < v.length(); i++)
+            in >> v.arr[i];
+        return in;
+    }
+    friend ostream& operator<<(ostream& out, const Vector& v)
+    {
+        for (int i = 0; i < v.length(); i++)
+            out << v.arr[i] << ' ';
+        return out;
+    }
+    bool operator==(Vector& v) const {
+        if (length() != v.length())
+            return false;
+        else {
+            for (int i = 0; i < length(); i++) {
+                if (arr[i] != v[i])
+                    return false;
+            }
+        }
+        return true;
+    }
+    bool operator!=(Vector& v) const {
+        if (length() != v.length())
+            return true;
+        else {
+            for (int i = 0; i < length(); i++) {
+                if (arr[i] != v[i])
+                    return true;
+            }
+        }
+        return false;
+    }
+    /*
+ TODO List:
+ 1. methods: push_front(T element), pop_front(), add(T element, int index),
+    remove(int index), set(T element, int index), clearAll(), sort()
+ 2. operators: ==, !=, =, >>, <<
+
+ */
+};
+int main() {
+    Vector<int> a(1);
+    cout << a << endl;
+    a.push_back(1);
+    a.push_back(2);
+    a.push_back(3);
+    for (int i = 0; i < a.length(); i++) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+    a.pop_back();
+    for (int i = 0; i < a.length(); i++) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+    Vector<int> b(1);
+    b.push_front(1);
+    for (int i = 0; i < b.length(); i++) {
+    cout << b[i] << " ";
+    }
+    return 0;
+}

@@ -1,0 +1,409 @@
+//4.2
+#include <iostream>
+#include <cmath>
+#include <string>
+
+using namespace std;
+
+class Person {
+
+  string name;
+
+  string address;
+
+public:
+Person(){}
+Person(string name, string address){
+  this->name = name;
+
+  this->address = address;
+}
+string getName(){
+  return name;
+}
+string getAddress(){
+  return address;
+}
+void setAddress(string address){
+  this->address = address;
+}
+void getInfo(){
+  cout<<"Name:"<<getName()<<"\nAddress"<<getAddress()<<endl;
+}
+};
+
+class Student:public Person{
+  string program;
+
+  int year;
+
+  double fee;
+
+public:
+Student(){}
+Student(string name, string address, string program, int year, double fee):Person(name, address){
+this->program=program;
+this->year=year;
+this->fee=fee;
+}
+
+string getProgram(){
+  return program;
+}
+
+void setProgram(string program){
+this->program = program;
+}
+
+int getYear(){
+  return year;
+}
+
+void setYear(int year){
+  this->year=year;
+}
+
+double getFee(){
+  return fee;
+}
+
+void setFee(double fee){
+this->fee = fee;
+}
+
+void getInfo(){
+   cout<<"Student:" << getName()<< "Program: " << getProgram() << getYear() << getFee() << endl;
+}
+};
+
+class Staff:public Person {
+	string school;
+	double pay;
+
+public:
+Staff(){}
+Staff(string name, string address, string school, double pay):Person(name,address){
+ this->school=school;
+
+ this->pay=pay;
+
+}
+string getSchool(){
+  return school;
+}
+void setSchool(string school){
+  this->school=school;
+}
+double getPay(){
+  return pay;
+}
+void setPay(double pay){
+  this->pay=pay;
+}
+
+void getInfo(){
+  cout<<getSchool()<<"School"<<"Pay"<<getPay()<<endl;
+}
+
+};
+
+int main(){
+  Person acc("KKKk", "asdfgh");
+  Student bcc("KKKk","asdfgh", "it", 7, 2334.34 );
+  Staff ccc("KKKk","asdfgh","sdfghjk", 2345678);
+  acc.getInfo();
+	bcc.getInfo();
+	ccc.getInfo();
+
+
+
+return 0;
+
+}
+
+//4.5
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+class Shape{
+  string color = "red";
+  
+  bool filled = true;
+
+public:
+Shape(){}
+Shape(string color, bool filled);
+
+string getColor(){
+  return color;
+}
+void setColor(string color){
+this->color = color;
+}
+bool isFilled(){
+  return filled;
+}
+void setFilled(bool filled){
+this->filled = filled;
+}
+void getInfo(){
+  cout<<"Color"<<getColor()<<"Filled"<<isFilled()<<endl;
+}
+};
+
+class Circle:public Shape {
+  double radius = 1.0;
+public:
+Circle(){}
+Circle(double radius);
+Circle(double radius, string color, bool filled):Shape(color, filled){
+  this->radius= radius;
+}
+
+double getRadius(){
+  return radius;
+}
+void setRadius(double radius){
+  this->radius = radius;
+}
+double getArea(){
+  return radius*radius*M_PI ;
+}
+double getPerimeter(){
+return 2*M_PI*radius;
+}
+void getInfo(){
+  cout<<"Circle:"<<"color"<<getColor()<<"filled"<<isFilled()<<"radius"<<getRadius()<<endl;
+}
+};
+class Rectangle:public Shape{
+double width = 1.0;
+double length = 1.0;
+public:
+Rectangle(){}
+Rectangle(double width, double length);
+Rectangle(double width, double lenght, string color, bool filled):Shape(color, filled){
+  this->width = width;
+  this->length=length;
+} 
+double getWidth(){
+  return width;
+}
+void setWidth(double width){
+  this->width=width;
+}
+double getLength(){
+  return length;
+}
+void setLength(double length){
+  this->length=length;
+}
+double getArea(){
+  return width*length;
+}
+double getPerimeter(){
+  return 2*(width+length);
+}
+void getInfo(){
+  cout<<"Rectangle:"<<"color"<<getColor()<<"filled"<<isFilled()<<"width"<<getWidth()<<"length"<<getLength()<<endl;
+}
+};
+class Square: public Rectangle, public Shape {
+  double side=1.0;
+public:
+Square(){}
+Square(double side);
+Square(double side, string color, bool filled, double width, double length): Shape(color, filled), Rectangle(width, length){
+  this->side=side;
+}
+double getSide(){
+  return side;
+}
+void setSide(double side){
+  this->side=side;
+}
+void setWidth(double side){
+  this->side=side;
+}
+void setLength(double side){
+  this->side=side;
+}
+void getInfo(){
+    cout<<"Square:"<<"color"<<getColor()<<"filled"<<isFilled()<<"width"<<getWidth()<<"length"<<getLength()<<endl;
+};
+int main(){
+  Shape a("red", true);
+  Circle b(1.0);
+  Rectangle c(1.0, 1.0);
+  Square d(1.0);
+  a.getInfo();
+  b.getInfo();
+  c.getInfo();
+  d.getInfo();
+return 0;
+}
+//4.3
+#include<iostream>
+#include<string>
+using namespace std;
+class Point2D{
+    float x, y;
+    int *a;
+public:
+    Point2D(){
+    }
+    Point2D(float x, float y) {
+        this->x = x;
+        this->y = y;
+    }
+    float getX()
+    {
+        return x;
+    }
+    void setX(float x)
+    {
+        this->x = x;
+    }
+    float getY()
+    {
+        return y;
+    }
+    void setY(float y)
+    {
+        this->y = y;
+    }
+
+    void setXY(float x, float y) {
+        this->x = x;
+        this->y = y;
+    }
+    int* getXY(){
+        a = new int[2];
+        a[0] = x;
+        a[1] = y;
+        return a;
+    }
+    ~Point2D(){
+        if(!a)
+            delete [] a;
+    }
+};
+class Point3D : public Point2D
+{
+    float z;
+    int *b;
+public:
+    Point3D(){
+    }
+    Point3D(float x, float y, float z) : Point2D(x, y)
+    {
+        this->z = z;
+    }
+    float getZ()
+    {
+        return z;
+    }
+    void setZ(float z)
+    {
+        this->z = z;
+    }
+    void setXYZ(float x, float y, float z)
+    {
+        setXY(x,y);
+        this->z = z;
+    }
+    int* getXYZ()
+    {
+        getXY();
+        b = new int[1];
+        b[0] = z;
+        return b;
+    }
+    ~Point3D()
+    {
+        if(!b)
+            delete [] b;
+    }
+};
+int main() {
+    Point2D p(4, 5);
+    return 0;
+}
+//2.2
+//2.2
+#include <string>
+#include <iostream>
+#include <vector>
+using namespace std;
+class Author {
+	string name;
+	string email;
+	char gender;
+public:
+	Author(string name, string email, char gender) {
+		this->name = name;
+		this->email = email;
+		this->gender = gender;
+	}
+	string getName() {
+		return name;
+	}
+	string getEmail() {
+		return email;
+	}
+	void setEmail(string email) {
+		this->email = email;
+	}
+	char getGender() {
+		return gender;
+	}
+	void getInfo() {
+		cout << "Author[name = " + getName() + ", email = " + 
+			getEmail() + ", gender = " + getGender() + "]" << endl;
+	}
+};
+class Book {
+	double price;
+	string name;
+	int qty = 0;
+	Author* authors;
+public:
+	Book(string name, int qty, double price) {
+		this->name = name;
+		this->qty = qty;
+		this->price = price;
+	}
+	string getName() {
+		return name;
+	}
+	Author* getAuthors() {
+		return authors;
+	}
+	double getPrice() {
+		return price;
+	}
+	void setPrice(double price) {
+		this->price = price;
+	}
+	int getQty() {
+		return qty;
+	}
+	void setQty(int qty) {
+		this->qty = qty;
+	}
+	void getMessage() {
+		cout << "Book [name = " << getName() << " authors = " << getAuthors() << " email = " << authors[0].getEmail()
+			<< " price = " << price << " qty = " << getQty() << "]" << endl;
+	}
+	string getAuthorNames() {
+		return &Author getName();
+	}
+};
+int main() {
+	Author a("ывапролорп", "mibrayeva02@gmail.com", 'W');
+	Book b("Madina", 23467, 23454.234543 );
+	b.getMessage();
+	return 0;
+}

@@ -1,0 +1,229 @@
+
+"A-B"
+
+#include <iostream>
+#include <cstring>
+#include <stack>
+using namespace std;
+
+
+stack<int> s;
+char str[100];
+int n;
+int main(void)
+{
+  while(scanf("%s", &str))
+  {
+    if (strcmp(str,"push") == 0)
+    {
+      cin>>n;;
+      s.push(n);
+      cout<<"ok"<<"\n";
+    } else
+
+    if (strcmp(str,"pop") == 0)
+    {
+        if (s.size() == 0)
+            cout << "error" << '\n';
+        else{
+            cout<<s.top()<<"\n";
+            s.pop();
+        }
+    } else
+    if (strcmp(str,"back") == 0)
+    {
+        if (s.size() == 0)
+            cout << "error" << '\n';
+        else{
+            cout<<s.top()<<"\n";
+        }
+    } else
+    if (strcmp(str,"back") == 0)
+    {
+        if (s.size() == 0)
+            cout << "error" << '\n';
+        else
+            cout<<s.top()<<"\n";
+    } else
+    if (strcmp(str,"size") == 0)
+    {
+       cout<<s.size()<<"\n";
+    } else
+    if (strcmp(str,"clear") == 0)
+    {
+      while(!s.empty()) 
+    s.pop();
+      cout<<"ok"<<"\n";
+    } else
+    if (strcmp(str,"exit") == 0)
+    {
+      cout<<"bye"<<"\n";
+      break;
+    } else
+    {
+      cout<<"wrong command"<<"\n";
+    }
+  }
+  return 0;
+}
+
+
+"D-E"
+#include <iostream> 
+#include <string>
+using namespace std;
+ 
+struct queue{
+    int storage[100000];
+    int start;
+    int end;
+    queue(){
+        start = 0;
+        end = 0;
+    }
+ 
+    void push(int n){
+        storage[end] = n;
+        end++;
+    }
+ 
+    int pop(){
+        int a = storage[start];
+        start++;
+        return a;
+    }
+ 
+    int front(){
+        return storage[start];
+    }
+
+    int back(){
+        return storage[end-1];
+    }
+ 
+    int size(){
+        return end - start;
+    }
+ 
+    string clear(){
+        end = 0;
+        start = 0;
+        return "ok";
+    }
+ 
+    string exit(){
+        return "bye";
+    }
+};
+
+int main() {
+    string a;
+    queue x;
+
+    while(cin >> a){
+        if(a == "push"){
+            int n;
+            cin >> n;
+            x.push(n);
+            cout << "ok" << endl;
+        }
+        if(a == "pop"){
+            if (x.size() == 0)
+                cout << "error" << endl;
+            else
+                cout << x.pop() << endl;
+        }
+        if(a == "front"){
+            if (x.size() == 0)
+                cout << "error" << endl;
+            else
+                cout << x.front() << endl;
+        }
+        if(a == "size"){
+            cout << x.size() << endl;
+        }
+        if(a == "clear"){
+            cout << x.clear() << endl;
+        }
+        if(a == "back"){
+            if (x.size() == 0)
+                cout << "error" << endl;
+            else
+                cout << x.back() << endl;
+        }
+        if(a == "exit"){
+            cout << x.exit() << endl;
+            return 0;
+        }
+    }
+return 0;
+}
+
+"G-H"
+
+#include <iostream>
+#include <cstring>
+#include <deque>
+using namespace std;
+deque <int> d;
+int n;
+char s[100];
+int main(void) {
+    while (scanf("%s", &s)) {
+        if (strcmp(s, "push_front") == 0) {
+            scanf("%d", &n);
+            d.push_front(n);
+            cout << "ok" << "\n";
+        }
+        else {
+            if (strcmp(s, "push_back") == 0) {
+                scanf("%d", &n);
+                d.push_back(n);
+                cout << "ok" << "\n";
+            }
+            else {
+                if (strcmp(s, "pop_front") == 0 && !d.empty()) {
+                    printf("%d\n", d.front());
+                    d.pop_front();
+                }
+                else {
+                    if (strcmp(s, "pop_back") == 0 && !d.empty()) {
+                        printf("%d\n", d.back());
+                        d.pop_back();
+                    }
+                    else {
+                        if (strcmp(s, "front") == 0 && !d.empty()) {
+                            printf("%d\n", d.front());
+                        }
+                        else {
+                            if (strcmp(s, "back") == 0 && !d.empty()) {
+                                printf("%d\n", d.back());
+                            }
+                            else {
+                                if (strcmp(s, "size") == 0) {
+                                    printf("%d\n", d.size());
+                                }
+                                else {
+                                    if (strcmp(s, "clear") == 0) {
+                                        while (!d.empty()) d.pop_back();
+                                        cout << "ok" << "\n";
+                                    }
+                                    else {
+                                        if (strcmp(s, "exit") == 0) {
+                                            cout << "bye" << "\n";;
+                                            break;
+                                        }
+                                        else {
+                                            cout << "error" << "\n";;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}

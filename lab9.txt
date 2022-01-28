@@ -1,0 +1,253 @@
+#include<iostream>
+using namespace std;
+template<typename T> class SingleList {
+    class Node {
+    public: T value; Node* next;
+          Node(T value = T(), Node* next = nullptr) {
+              this->value = value;
+              this->next = next;
+          }
+    };
+    int size;
+    Node* head;
+public:
+    SingleList() {
+        size = 0;
+        head = nullptr;
+    }
+    int length() {
+        return size;
+    }
+    void push_back(T element) {
+        if (head == nullptr) {
+            head = new Node(element);
+        }
+        else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = new Node(element);
+        }
+        size++;
+    }
+    void push_front(T element) {
+        if (head == nullptr) {
+            head = new Node(element);
+        }
+        else {
+            Node* temp = new Node(element, head);
+            head = temp;
+        }
+        size++;
+    }
+    void pop_back() {
+        if (size <= 0) {
+            throw out_of_range("");
+        }
+        else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = new Node;
+        }
+        size--;
+    }
+    void pop_front() {
+        if (size <= 0) {
+            throw out_of_range("");
+        }
+        else {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+        size--;
+    }
+    void clearAll() {
+        while (size != 0) {
+            pop_front();
+        }
+    }
+    void remove(int index) {
+        if (index < 0 || index > length()) {
+            throw out_of_range("");
+        }
+        if (index == 0) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            size--;
+        }
+        else {
+            Node* t = this->head;
+            for (int i = 0; i < index - 1; i++) {
+                t = t->next;
+            }
+            Node* del = t->next;
+            t->next = del->next;
+            delete del;
+            size--;
+        }
+    }
+    T operator [] (int index) {
+        T res = T();
+        Node* cur = head;
+        int counter = 0;
+        while (cur != nullptr) {
+            if (counter == index) {
+                res = cur->value;
+                break;
+            }
+            cur = cur->next;
+            counter++;
+        }
+        return res;
+    }
+    void set(T element, int index) {
+        int counter = 0;
+        Node* temp = head;
+        while (temp != nullptr) {
+            if (counter == index) {
+                temp->value = element;
+                break;
+            }
+            temp = temp->next;
+            counter++;
+        }
+    }
+    void add(T element, int index) {
+        if (index < 0 || index > length()) {
+            throw out_of_range("");
+        }
+        else if (index == 0) {
+            push_front(element);
+        }
+        else if (index == length()) {
+            push_back(element);
+        }
+        else {
+            Node* temp = new Node(element);
+            Node* cur = head;
+            for (int i = 1; i < index; i++) {
+                cur = cur->next;
+            }
+            temp->next = cur->next;
+            cur->next = temp;
+            size++;
+        }
+    }
+    bool operator == (const SingleList& s) {
+        if (length() != s.length())
+            return false;
+        else {
+            for (int i = 0; i < length(); i++) {
+                if (head != s.head)
+                    return false;
+            }
+        }
+        return true;
+    }
+    bool operator!= (const SingleList& s) const {
+        if (length() != s.length())
+            return true;
+        else {
+            for (int i = 0; i < length(); i++) {
+                if (head != s.head)
+                    return true;
+            }
+        }
+        return false;
+    }
+    friend ostream& operator<<(ostream& out, const SingleList& s) {
+        Node* temp = s.head;
+        if (temp->next) {
+            while (temp->next) {
+                out << temp->value << " ";
+            }
+            return out;
+        }
+    }
+    friend istream& operator>>(istream& in, const SingleList& s) {
+        Node* temp = s.head;
+        if (temp->next) {
+            while (temp->next) {
+                in >> temp->value;
+            }
+            return in;
+        }
+    }
+    ~SingleList() {
+        clearAll();
+    }
+};
+/*
+ TODO List:
+ 1. method: push_back(T element), pop_back(), add(T element, int index),
+    set(T element, int index), remove(int index)
+ 2. operator: ==, !=, =
+ */
+int main() {
+    SingleList<int> sl;
+    sl.push_front(4);
+    sl.push_front(2);
+    sl.push_front(3);
+    sl.push_front(1);
+    cout << "SingleList sl = ";
+    for (int i = 0; i < sl.length(); i++)
+        cout << sl[i] << " ";
+    cout << endl;
+    SingleList<int> b;
+    b.push_front(4);
+    b.push_front(2);
+    b.push_front(3);
+    b.push_front(1);
+    b.pop_front();
+    b.pop_front();
+    cout << "sl after 2pop_front = ";
+    for (int i = 0; i < b.length(); i++)
+        cout << b[i] << " ";
+    cout << endl;
+    SingleList<int> s;
+    s.push_back(5);
+    s.push_back(2);
+    s.push_back(1);
+    s.push_back(4);
+    cout << "SingleList s = ";
+    for (int i = 0; i < s.length(); i++)
+        cout << s[i] << " ";
+    cout << endl;
+    SingleList<int> a;
+    a.push_back(5);
+    a.push_back(2);
+    a.push_back(1);
+    a.push_back(4);
+    a.pop_back();
+    a.pop_back();
+    cout << "s after 2pop_back = ";
+    for (int i = 0; i < a.length(); i++)
+        cout << a[i] << " ";
+    cout << endl;
+    SingleList<int> c, d;
+    cout << "Singlelist c = ";
+    c.push_back(1); c.push_back(2); c.push_back(3);
+    for (int i = 0; i < c.length(); i++)
+        cout << c[i] << " ";
+    c.remove(2);
+    cout << endl << "c after removing 3rd element = ";
+    for (int i = 0; i < c.length(); i++)
+        cout << c[i] << " ";
+    cout << endl;
+    c.set(2, 1);
+    cout << "c after setting an element = ";
+    for (int i = 0; i < c.length(); i++)
+        cout << c[i] << " ";
+    cout << endl;
+    c.add(4, 1);
+    cout << "c after adding an element = ";
+    for (int i = 0; i < c.length(); i++)
+        cout << c[i] << " ";
+    cout << endl;
+    return 0;
+}

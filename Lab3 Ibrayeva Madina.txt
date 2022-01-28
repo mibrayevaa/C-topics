@@ -1,0 +1,231 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+
+using namespace std;
+
+class Employee {
+    int id;
+    
+    string firstName;
+    
+    string lastName;
+    
+    int salary;
+    
+public:
+
+Employee(int id, int salary, string firstName, string lastName){
+    
+    this->lastName = lastName;
+    
+    this->firstName = firstName;
+    
+    this->id = id;
+    
+    this->salary = salary;
+    
+}
+
+int getid(){
+    return id;
+}
+
+string getfirstName() {
+    return firstName;
+}
+
+string getlastName() {
+    return lastName;
+}
+
+string name() {
+    return firstName + lastName;
+}
+
+int getsalary() {
+    return salary;
+}
+
+void setsalary(int salary){
+    
+    this->salary = salary;
+}
+
+int getannualsalary(){
+    
+    
+    
+    return salary*12;
+}
+
+int raisesalary(int percent){
+  
+    return salary=salary+(salary*percent/100);
+}
+
+void getinfo(){
+  cout<<"ID:"<<id<<"\nFirstName:"<<firstName<<"\nLastName"<<lastName<<"\nsalary:"<<salary;
+}
+};
+
+ 
+ int main(){
+     
+    Employee empl (28234, 23456789, "Madina", "Ibrayeva" );
+
+    cout<<"\nRaise:"<< empl.raisesalary(20);
+    return 0;
+ }
+
+
+
+
+//2
+
+
+#include <iostream>
+#include <cmath>
+#include <string>
+
+using namespace std;
+
+class InvoiceItem {
+    string id;
+    
+    string desc;
+    
+    int qty;
+    
+    double unitPrice;
+    
+public:
+
+InvoiceItem(string id, string desc, int qty, double unitPrice){
+    
+    this->id = id;
+    
+    this->desc = desc;
+    
+    this->qty = qty;
+    
+    this->unitPrice = unitPrice;
+    
+}
+
+string getid(){
+    return id;
+}
+
+string getDesc() {
+    return desc;
+}
+
+int getQty() {
+    return qty;
+}
+
+void setQty(int qty) {
+    this->qty = qty;
+
+}
+
+double getUnitPrice() {
+    return unitPrice;
+}
+
+void setUnitPrice(double unitPrice){
+    
+    this->unitPrice = unitPrice;
+}
+
+double getTotal(){
+    
+    return unitPrice*qty;
+}
+
+
+void getinfo(){
+  cout<<"ID:"<<id<<"\nDesc:"<<desc<<"\nQty:"<<qty<<"\nUnitPrice:"<<unitPrice;
+}
+};
+ 
+ 
+ int main(){
+     
+    InvoiceItem  invit("lllllll", "kkkkk", 938765, 567890 );
+    
+    invit.getinfo();
+
+  
+    
+    return 0;
+ }
+
+//3
+
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+class Account {
+private:
+    string id;
+    string name;
+    int balance = 0;
+public:
+    Account(string id, string name)
+    {
+        this->id = id;
+        this->name = name;
+    }
+    Account(string id, string name, int balance)
+    {
+        this->id = id;
+        this->name = name;
+        this->balance = balance;
+    }
+    string getID() {
+        return id;
+    }
+    string getName() {
+        return name;
+    }
+    int getBalance() {
+        return balance;
+    }
+    int credit(int amount) {
+        balance = amount + balance;
+        cout << balance;
+    }
+
+    int debit(int amount) {
+		if  (amount <= balance) {
+			balance -= amount;
+		}
+		else
+			cout << "amount exceeded";
+		return balance;
+        }
+
+
+
+    int transferTo(Account another, int amount) {
+        if (amount <= balance) {
+			balance -= amount;
+		}
+		else  
+		cout << "Amount exceeded"<<endl;
+		return balance;
+    }
+};
+int main() {
+    Account acc("kkkkkk", "Lisa", 30);
+    Account another("llllll", "Jenny", 50);
+    
+    cout<<another.transferTo(another, 40)<<endl;
+
+}
+  
+
+

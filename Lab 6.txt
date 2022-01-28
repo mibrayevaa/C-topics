@@ -1,0 +1,148 @@
+#include<iostream>
+using namespace std;
+class Matrix {
+    int row, col, ** a;
+public:
+    Matrix(int row, int col) {
+        this->row = row;
+        this->col = col;
+        a = new int* [row];
+        for (int i = 0; i < row; i++) {
+            a[i] = new int[col];
+        }
+    }
+    ~Matrix() {
+        for (int i = 0; i < row; i++)
+            delete a[i];
+        delete[] a;
+    };
+    Matrix operator+(Matrix add) {
+        if (row != add.row || col != add.col) {
+            throw length_error("Illegal matrix dimensions.");
+        }
+        Matrix X(row, col);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                X.a[i][j] = a[i][j] + add.a[i][j];
+            }
+        }
+        return X;
+    }
+    Matrix operator-(Matrix sub) {
+      if (sub.row != row || sub.col != col) {
+          throw length_error ( "Illegal matrix dimensions.");
+      }
+      Matrix X(row, col);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+              X.a[i][j] = a[i][j] - sub.a[i][j];
+          }
+        }
+        return X;
+    }
+    Matrix operator!=(Matrix isnoteq) {
+      Matrix X(row, col);
+      if (X.row != row || X.col != col) {
+        throw length_error("Illegal matrix dimensions.");
+      }
+      for (int i = 0; i < row; i++) {
+          for (int j = 0; j < col; j++) {
+              X.a[i][j] = isnoteq.a[j][i];
+              cout << "Matrices are not equal" << endl; 
+            }
+        }
+        return X;
+    }  
+     Matrix operator==(Matrix eq) {
+      if (eq.row != row|| eq.col != col) {
+          throw length_error("Illegal matrix dimensions.");
+      }
+      Matrix X(row, col);
+      for (int i = 0; i < row; i++) {
+          for (int j = 0; j < col; j++) {
+              X.a[i][j] = eq.a[i][j] ;
+              cout << "Matrices are equal" << endl; 
+            }
+        }
+        return X;
+    }
+    Matrix operator*(Matrix multiply) {
+        if (col != row) {
+            cout << "Illegal matrix dimensions." << endl;
+        }
+        Matrix X(row, col);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+              X.a[i][j] += a[i][j] * multiply.a[i][j];
+            }
+        }
+        return X;
+    }
+    Matrix operator[](Matrix det) {
+        int determinant = 0;
+        Matrix X(row, col);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < row; j++) {
+                X.a[i][j] = a[i][j];
+            }
+        }
+        for (int i = 0; i < row - 1; i++) {
+            if (X.a[i][i]) {
+                for (int j = i + 1; j < row; j++) {
+                    for (int k = row - 1; k > i; k--) {
+                        X.a[j][k] -= (X.a[i][k] * X.a[j][i])/X.a[i][i];
+                    }
+                }
+            }
+            else {
+                for (int j = i + 1; i < row; i++) {
+                    if (X.a[j][i] != 0) {
+                        for (int k = 0; k < row; k++) {
+                            X.a[i][k] += X.a[j][k];
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < row; i++) {
+            determinant *= X.a[i][i];
+            cout << determinant;
+            }
+        return X;
+    }
+    friend istream& operator >> (istream& in, Matrix& obj);
+    friend ostream& operator << (ostream& out, const Matrix& obj);
+};
+istream& operator >> (istream& in, Matrix& obj) {
+    for (int i = 0; i < obj.row; i++) {
+        for (int j = 0; j < obj.col; j++) {
+            in >> obj.a[i][j];
+        }
+    }
+    return in;
+}
+ostream& operator << (ostream& out, const Matrix& obj) {
+    for (int i = 0; i < obj.row; i++) {
+        for (int j = 0; j < obj.col; j++) {
+            out << obj.a[i][j] << " ";
+        }
+        out << endl;
+    }
+    return out;
+};
+int main() {
+    Matrix A(2, 2);
+    Matrix B(2, 2);
+    //todoList
+    /*
+     +, -, *, ==, !=
+     [] - determinant
+     */
+    cout << "A = ";
+    cin >> A;
+    cout << "B = ";
+    cin >> B;
+    cout << "A+B = " << A+B << "A-B = " << A-B << "A*B = " << A*B;
+    return 0;
+}

@@ -1,0 +1,351 @@
+//3.1
+#include <iostream
+#include <string>
+#include <cmath
+using namespace std;
+class mycomplex {
+private:
+	double real, imag;
+public:
+	mycomplex() {
+		real = 0;
+		imag = 0;
+	}
+	mycomplex(double real, double imag) {
+		this->real = real;
+		this->imag = imag;
+	}
+	double getReal() const {
+		return real;
+	}
+	double getImag() const {
+		return imag;
+	}
+	void setReal(double real) {
+		this->real = real;
+	}
+	void setImag(double imag) {
+		this->imag = imag;
+	}
+	void setValue(double real, double imag) {
+		this->real = real;
+		this->imag = imag;
+	}
+	void getInfo() {
+		if (imag < 0) {
+			cout << "(" << getReal() << " " << getImag() << "i)" ;
+		}
+		else {
+			cout << "(" << getReal() << " + " << getImag() << "i)" ;
+		}
+	}
+	bool isReal() {
+		return this->real == 0;
+	}
+	bool isImaginary() {
+		return this->imag == 0;
+	}
+	bool equals(double real, double imag) {
+		if ((this->real == real) && (this->imag == imag)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	bool equals(mycomplex* another) {
+		if ((this->real == another->getReal()) && (this->imag == another->getImag())) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	double magnitude() {
+		return int(sqrt(real * real + imag * imag));
+	}
+	double argumentInRadians() {
+		return double(atan2(this->imag, this->real));
+	}
+	mycomplex* add(mycomplex* right) {
+		return new mycomplex(this->real + right->getReal(), this->imag + right->getImag());
+	}
+	mycomplex* subtract(mycomplex* right) {
+		return new mycomplex(this->real - right->getReal(), this->imag - right->getImag());
+	}
+	mycomplex* addNew(mycomplex* right) {
+		return new mycomplex(right->getReal() + this->real, right->getImag() + this->imag);
+	}
+	mycomplex* substractNew(mycomplex* right) {
+		return new mycomplex(right->getReal() - this->real, right->getImag() - this->imag);
+	}
+	mycomplex* conjugate() {
+		return new mycomplex(this->real, -1 * this->imag); // construct a new instance and return the constructed instance
+	}
+	mycomplex* multiply(mycomplex* right) {
+		double a, b, c, d;
+		a = this->real;
+		b = this->imag;
+		c = right->getReal();
+		d = right->getImag();
+		this->real = double(a * c - b * d);
+		this->imag = double(a * d + b * c);
+		return this;
+	}
+	mycomplex* divide(mycomplex* right) {
+		double a, b, c, d;
+		a = this->real;
+		b = this->imag;
+		c = right->getReal();
+		d = right->getImag();
+		this->real = double(a * c + b * d) / (c * c + d * d);
+		this->imag = double(b * c - a * d) / (c * c + d * d);
+		return this;
+	}
+	void getMessage() {
+		cout << "Magnitude = " << magnitude() << ", ArgumentInRadians = " <<
+			argumentInRadians() << endl;
+	}
+};
+int main() {
+	mycomplex n1(1.1, 2.2);
+	mycomplex n2(3.3, 4.4);
+	cout << "Number 1 is: ";
+	n1.getInfo();
+	if (n1.isReal()) {
+		cout << "is a pure real number";
+	}
+	else {
+		cout << "is NOT a pure real number" << ",";
+	}
+	if (n1.isImaginary()) {
+		cout << "is a pure imaginary number";
+	}
+	else {
+		cout << "is NOT a pure imaginary number" << endl;
+	}
+	cout << "Number 2 is: ";
+	n2.getInfo();
+	if (n2.isReal()) {
+		cout << "is a pure real number";
+	}
+	else {
+		cout << "is NOT a pure real number" << ",";
+	}
+	if (n2.isImaginary()) {
+		cout << "is a pure imaginary number";
+	}
+	else {
+		cout << "is NOT a pure imaginary number" << endl;
+	}
+	cout << "Number 1 : ";
+	n1.getMessage();
+	cout << "Number 2 : ";
+	n2.getMessage();
+	if (n1.equals(3.3, 4.4)) {
+		n1.getInfo();
+		cout << " is equal to ";
+		n2.getInfo();
+	}
+	else {
+		n1.getInfo();
+		cout << " is NOT equal to ";
+		n2.getInfo();
+		cout << endl;
+	}
+	mycomplex* add =n1.add(&n2);
+	n1.getInfo();
+	cout << " + ";
+	n2.getInfo();
+	cout << " = ";
+	add->getInfo();
+	cout << endl;
+	mycomplex* sub = n1.subtract(&n2);
+	n1.getInfo();
+	cout << " - ";
+	n2.getInfo();
+	cout << " = ";
+	sub->getInfo();
+	cout << endl;
+	return 0;
+}
+
+//6.4
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+class Resizable {
+public:
+	virtual void resize(int percent) {};
+};
+class GeometricObject {
+public:
+	virtual double getPerimeter() = 0;
+	virtual double getArea() = 0;
+};
+class Circle : public GeometricObject {
+protected:
+double radius = 1.0;
+public:
+	Circle(double radius) {
+		this->radius = radius;
+	}
+	double getPerimeter() override {
+		return 3.14 * 2 * radius;
+	}
+	double getArea() override {
+		return 3.14 * radius * radius;
+	}
+	void getInfo() {
+		cout << "Radius = " << radius << ", Area = " << getArea()
+			<< ", Perimeter = " << getPerimeter() << endl;
+	}
+};
+class ResizableCircle : public Circle, public Resizable {
+private:
+	double radius;
+public:
+	ResizableCircle(double radius) :Circle(radius) {
+		this->radius = radius;
+	}
+	void resize(int percent) override {
+		radius *= percent / 100.0;
+	}
+	void getInfo() {
+		cout << "Radius=" << radius << endl;
+		resize(70);
+		cout << "Radius=" << radius << endl;
+	}
+};
+
+int main() {
+	Circle c(7.0);
+	c.getInfo();
+	ResizableCircle r(5.5);
+	r.getInfo();
+	return 0;
+}
+
+//6.3
+#include <iostream>
+#include <string>
+using namespace std; 
+class Movable {
+public:
+	virtual void moveUp(){};
+	virtual void moveDown(){};
+	virtual void moveLeft(){};
+	virtual void moveRight(){};
+};
+class MovablePoint : public Movable {
+	int x;
+	int y;
+	int xSpeed;
+	int ySpeed;
+public:
+	MovablePoint(int x, int y, int xSpeed, int ySpeed) {
+		this->x = x;
+		this->y = y;
+		this->xSpeed = xSpeed;
+		this->ySpeed = ySpeed;
+	}
+	void getInfo() {
+		cout << "MovablePoint {" << "x=" << x
+			<< ", y=" << y  << ", xSpeed=" << xSpeed
+			<< ", ySpeed=" << ySpeed << "}";
+	}
+	void moveUp() override {
+		y -= ySpeed;
+	}
+	void moveDown() override {
+		y += ySpeed;;
+	}
+	void moveLeft() override {
+		x -= xSpeed ;
+	}
+	void moveRight() override {
+		x += xSpeed ;
+	}
+};
+class MovableCircle : public Movable {
+private:
+	int radius;
+	MovablePoint* center;
+public:
+	virtual ~MovableCircle() {
+		delete center;
+	}
+	MovableCircle(int x, int y, int xSpeed, int ySpeed, int radius) {
+		this->radius = radius;
+		this->center = new MovablePoint(x, y, xSpeed, ySpeed);
+	}
+	void getInfo() {
+		cout << "MovableCircle {" << "center=";
+			center->getInfo();
+		cout << ", radius=" << radius << "}" << endl;
+	}
+	void moveUp() override {
+		center->moveUp();
+	}
+	void moveDown() override {
+		center->moveDown();
+	}
+	void moveLeft() override {
+		center-> moveLeft();
+	}
+	void moveRight() override {
+		center->moveRight();
+	}
+};
+class MovableRectangle : public Movable {
+private:
+	MovablePoint* topLeft;
+	MovablePoint* bottomRight;
+public:
+	virtual ~MovableRectangle() {
+		delete topLeft;
+		delete bottomRight;
+	}
+	MovableRectangle(int x1, int y1, int x2, int y2, int xSpeed, int ySpeed) {
+		topLeft = new MovablePoint(x1, y1, xSpeed, ySpeed);
+		bottomRight = new MovablePoint(x2, y2, xSpeed, ySpeed);
+	}
+	void getInfo() {
+		cout << "MovableRectangle {" << "topLeft="; 
+		topLeft->getInfo();
+		cout << "}" << endl;
+		cout << "MovableRectangle{" << "bottomRight=";
+		bottomRight->getInfo();
+		cout << "}" << endl;
+	}
+	void moveUp() override {
+		topLeft->moveUp();
+		bottomRight->moveUp();
+	}
+	void moveDown() override {
+		topLeft->moveDown();
+		bottomRight->moveDown();
+	}
+	void moveRight() override {
+		topLeft->moveRight();
+		bottomRight->moveRight();
+	}
+	void moveLeft() override {
+		topLeft->moveLeft();
+		bottomRight->moveLeft();
+	}
+};
+int main() {
+	MovablePoint p(4, 15, 6, 8);
+	p.getInfo();
+	cout << endl;
+	p.moveLeft();
+	p.getInfo();
+	cout << endl;
+	MovableCircle c(3, 8, 23, 8, 6);
+	c.getInfo();
+	MovableRectangle r(5, 3, 9, 6, 9, 8);
+	r.getInfo();
+	return 0;
+}

@@ -1,0 +1,111 @@
+'1'
+#include <iostream>
+using namespace std;
+ bool fact(int k)
+    {
+        if(k == 1)
+            return true;
+        if(k < 1)
+            return false;
+        else
+            return(fact(k-3) || fact(k-5));
+    }
+    
+    
+int main()
+{
+    int k;
+    cin >> k;
+    
+    cout << fact(k);
+    
+    
+    return 0;
+}
+'2'
+#include<cmath>
+ 
+using namespace std;
+ 
+int fact(int a, int*p){
+ if(a < 10){
+ if(a > *p){
+ *p = a;
+ }
+ return *p;
+ } else {
+ if(a % 10 > *p){
+ *p = a % 10;
+ }
+ return fact(a / 10, p);
+ }
+}
+ 
+int main(){
+ int k, pt = 0;
+ int *lg = &pt;
+ cin >> k;
+ cout << fact(k, lg);
+ return 0;
+}
+
+
+'3'
+#include<iostream>
+#include<cmath>
+#include<string>
+using namespace std;
+
+int fact(string, int, int);
+
+int main(){
+  string pp;
+  cin >> pp;
+  cout << fact(pp, 0, 0);
+  return 0;
+}
+
+int fact(string t, int n, int k){
+
+  if(k == t.size()){
+
+    return n;
+  } 
+
+else if(k < t.size() && (int)t[k] > 47 && (int)t[k] < 58) {
+
+    return fact(t, n + 1, k + 1);
+
+  }
+ else 
+{
+
+
+    return fact(t, n, k + 1);
+  }
+}
+
+
+'4'
+#include <iostream>
+#include <string>
+using namespace std;
+void recursion(string &p, int m)
+{
+if ( m - p.size() < p.size() ) return;
+p.insert(m, "*" ); recursion(p, m + 2);
+}
+int main()
+{
+    string p;
+    getline( cin, p);
+    int m = 1;
+    recursion(p, m);
+    cout << p;
+    return 0;
+}
+
+
+
+
+

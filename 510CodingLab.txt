@@ -1,0 +1,216 @@
+//1
+import java.util.Scanner;
+
+public class Main  {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        if(a>b){
+            System.out.println(a);
+        }
+        else {
+            System.out.println(b);
+        }
+    }
+}
+
+
+//2
+import java.util.Scanner;
+
+public class Main{
+  public static void main(String[]args){
+    Scanner my = new Scanner(System.in);
+    int number = my.nextInt();
+    System.out.println("Enter the number");
+    if (number > 0){
+      System.out.println("+");
+    }
+    else {
+      System.out.println("-");
+    }
+
+  }
+
+}
+
+//3
+
+import java.util.Scanner;
+
+public class Main {
+  public static void main(String []args){
+    Scanner myObj = new Scanner(System.in);
+System.out.println("Enter two numbers:");
+int x = myObj.nextInt();
+int y = myObj.nextInt();
+if (x<y){
+  x*=2;
+  y*=3;
+  System.out.printf("x ="+ x+ ','+"y ="+ y);
+}
+else {
+  y*=2;
+  x*=3;
+  System.out.printf("x ="+ x+ ','+"y ="+ y);
+}
+  }
+}
+
+//4
+import java.util.Scanner;
+
+public class Main {
+  public static void main(String []args){
+    Scanner myObj = new Scanner(System.in);
+System.out.println("Enter number:");
+int number = myObj.nextInt();
+int x= number%10;
+int y = number%100/10;
+int z = number/100;
+if ((x > y) & (x>z)) {
+  System.out.println(x);
+}
+else if((y>x) & (y>z)) {
+  System.out.println(y);
+}
+else{
+System.out.println(z);
+}
+}
+}
+
+//5
+import java.util.Scanner;
+
+
+public class Main {
+  public static void main(String []args){
+    Scanner myObj = new Scanner(System.in);
+System.out.println("Enter number:");
+int x = myObj.nextInt();
+int y = myObj.nextInt();
+int z = x/y;
+int a = x%y;
+if (a!=0) {
+System.out.println("not completely divisible");
+}
+else {
+  System.out.println(z);
+}
+
+  }
+}
+
+//6
+import java.util.Scanner;
+
+
+public class Main {
+  public static void main(String []args){
+    Scanner myObj = new Scanner(System.in);
+System.out.println("Enter number:");
+int n = myObj.nextInt();
+int a = myObj.nextInt();
+int c = n%10;
+int b = n/10;
+int d = c+b;
+if (d%10 !=0){
+  System.out.println("YES");
+}
+else {
+  System.out.println("NO");
+}
+if(d>a){
+  System.out.println("YES");
+}
+else {
+  System.out.println("NO");
+}
+  }
+}
+
+//7
+
+import java.util.Scanner;
+
+
+public class Main {
+  public static void main(String []args){
+    Scanner myObj = new Scanner(System.in);
+System.out.println("Enter number:");
+int n = myObj.nextInt();
+int c = n/100;
+int b = n%100/10;
+int d = n%10;
+int x = c+b;
+int y = b+d;
+
+
+
+if(x>y) {
+  System.out.println(x + ""+ y);
+}
+else {
+  System.out.println( y +""+ x);
+}
+  }
+}
+
+//8
+
+import java.util.Scanner;
+
+
+public class Main {
+  public static void main(String []args){
+    Scanner myObj = new Scanner(System.in);
+System.out.println("Enter number:");
+int N = myObj.nextInt();
+int R = myObj.nextInt();
+int F = myObj.nextInt();
+int S = myObj.nextInt();
+ 
+if((R<F)&(R<S)) {
+  System.out.println("R");
+}
+else if((F<S)&(F<R)) {
+  System.out.println("F");
+}
+else {
+  System.out.println("S");
+}
+  }
+}
+
+//9
+
+import java.util.Scanner;
+
+
+public class Main {
+  public static void main(String []args){
+    Scanner myObj = new Scanner(System.in);
+System.out.println("Enter number:");
+int N = myObj.nextInt();
+int R = myObj.nextInt();
+int F = myObj.nextInt();
+int S = myObj.nextInt();
+double x =( ((5*N)+(4*R)+(3*F)+(2*S))/(N+R+F+S) );
+System.out.println(x);
+if ((x<5)&(4<=x)) {
+  System.out.println(N);
+}
+else if(3<=x) {
+  System.out.println(R+N);
+}
+else if (2<=x){
+  System.out.println(F+R+N);
+}
+else {
+  System.out.println(F+R+N+S);
+  }
+}
+  }
